@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.2.xsd">
+
+	<context:component-scan base-package="com.stackroot" />
+
+	<bean id="HelloWorld" class="com.stackroot.beans.HelloWorld" scope="prototype" >
+		<property name="message" value="Hello Parent Class!" />
+	</bean>
+	
+	<bean id="HelloIndia" class="com.stackroot.beans.HelloIndia" parent="HelloWorld"  scope="prototype">
+		<!-- <property name="message" value="Hello Child class!" /> -->
+		<property name="message2" value="Vanakkam Chennai!" />
+	</bean>
+	
+	<bean id="beanClass" class="com.stackroot.beans.BeanClass" scope="prototype"
+		init-method="init" destroy-method="destroy">
+		<property name="name" value="Prodapt"></property>
+	</bean>
+	
+	<bean class="com.stackroot.beans.PPBeanClass" scope="prototype"></bean>
+	
+	<bean  id="student" class="com.stackroot.beans.Student" scope="prototype">
+		<constructor-arg value="1" type="int" name="id" ></constructor-arg>
+		<constructor-arg value="Shiva" type="String" name="name"></constructor-arg>
+		<constructor-arg ref="address" type="Address" name="address"></constructor-arg>
+		<property name="subjects">
+			<list>
+				<ref bean="maths" />
+				<ref bean="science" />
+			</list>
+		</property>
+	</bean>
+	
+	<bean  id="address" class="com.stackroot.beans.Address" scope="prototype">
+		<constructor-arg value="Chennai"  name="city" type="String" ></constructor-arg>
+		<constructor-arg value="Tamilnadu" name="state"  type="String" ></constructor-arg>
+		<constructor-arg value="India" name="country"   type="String" ></constructor-arg>
+	</bean>
+	
+	<bean id="maths" class="com.stackroot.beans.Subject"  scope="prototype">
+		<constructor-arg value="1" name="id" type="int"></constructor-arg>
+		<constructor-arg value="Maths" name="name" type="String"></constructor-arg>
+		<constructor-arg value="100" name="maxMarks" type="int"></constructor-arg>
+		<constructor-arg value="85" name="obtainedMarks" type="int"></constructor-arg>
+	</bean>
+	
+	<bean id="science" class="com.stackroot.beans.Subject" scope="prototype">
+		<constructor-arg value="2" name="id" type="int"></constructor-arg>
+		<constructor-arg value="Science" name="name" type="String"></constructor-arg>
+		<constructor-arg value="100" name="maxMarks" type="int"></constructor-arg>
+		<constructor-arg value="95" name="obtainedMarks" type="int"></constructor-arg>
+	</bean>
+	
+	<bean id="mappings"
+    class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+
+    <!-- typed as a java.util.Properties -->
+    <property name="properties">
+        <value>
+            jdbc.driver.className=com.mysql.jdbc.Driver
+            jdbc.url=jdbc:mysql://localhost:3306/mydb
+        </value>
+    </property>
+</bean>
+	
+</beans>
